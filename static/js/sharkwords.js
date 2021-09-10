@@ -32,7 +32,7 @@ const createDivsForChars = (word) => {
 // Loop over each letter in `ALPHABET` and generate buttons.
 //
 const generateLetterButtons = () => {
-  const letterButtonContainer = $("#letter-buttons");
+  const letterButtonContainer = document.querySelector("#letter-buttons");
   for (const char of ALPHABET) {
     letterButtonContainer.insertAdjacentHTML(
       "beforeend",
@@ -59,6 +59,8 @@ const isLetterInWord = (letter) => {
 //
 const handleCorrectGuess = (letter) => {
   // Replace this with your code
+  const correctLetter = document.querySelector(`div.${letter}`);
+  correctLetter.innerHTML = `${letter}`;
 };
 
 //
@@ -69,7 +71,14 @@ const handleCorrectGuess = (letter) => {
 // all buttons and show the "play again" message.
 
 const handleWrongGuess = () => {
-  // Replace this with your code
+  numWrong += 1;
+  const sharkImage = document.querySelector("#shark-img");
+  sharkImage.setAttribute("src", `guess${numWrong}.png`);
+
+  if (numWrong === 5) {
+    disableLetterButton(ALPHABET);
+    document.querySelector("#play-again").style.diplay = "";
+  }
 };
 
 //  Reset game state. Called before restarting the game.
@@ -88,6 +97,19 @@ const resetGame = () => {
 
   // add an event handler to handle clicking on a letter
   // YOUR CODE HERE
+
+  document.querySelector("button").addEventListener("click", (evt) => {
+    const clickedBtn = evt.target;
+  })
+  disableLetterButton(clickenBtn);
+
+  const letterGuess = isLetterInWord(clickedBtn)
+
+  if (letterGuess === true) {
+    handleCorrectGuess(clickedBtn)
+  } else if (letterGuess === false) {
+    handleWrongGuess()
+  }
 
   // add an event handler to handle clicking on the Play Again button
   // YOUR CODE HERE
